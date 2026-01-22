@@ -1,81 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metal Cities</title>
 
-    <!-- Вграден CSS -->
     <style>
-        body {
-            font-family: "Segoe UI", Roboto, Arial, sans-serif;
-            background: #ffffff;
-            color: #222;
-            line-height: 1.6;
-            padding: 40px 20px;
-        }
+        body { font-family: "Segoe UI", Roboto, Arial, sans-serif; background: #ffffff; color: #222; line-height: 1.6; padding: 40px 20px; }
         h1 { text-align: center; font-size: 3rem; margin-bottom: 40px; color: #1e293b; }
         h2 { font-size: 2rem; margin-bottom: 10px; color: #0f172a; }
 
         .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
-        .tabs button {
-            padding: 12px 26px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 999px;
-            border: 2px solid #e5e7eb;
-            background: #f8fafc;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
+        .tabs button { padding: 12px 26px; font-size: 1rem; font-weight: 600; border-radius: 999px; border: 2px solid #e5e7eb; background: #f8fafc; cursor: pointer; transition: all 0.25s ease; }
         .tabs button:hover { background: #2563eb; color: #fff; border-color: #2563eb; transform: translateY(-2px); }
 
-        .tabcontent {
-            display: none;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 16px;
-            background: #f9fafb;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
+        .tabcontent { display: none; max-width: 900px; margin: 0 auto; padding: 30px; border-radius: 16px; background: #f9fafb; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
 
         .subtabs { margin: 20px 0; display: flex; gap: 10px; }
-        .subtabs button {
-            padding: 8px 16px;
-            font-size: 0.9rem;
-            border-radius: 8px;
-            border: 1px solid #d1d5db;
-            background: #ffffff;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+        .subtabs button { padding: 8px 16px; font-size: 0.9rem; border-radius: 8px; border: 1px solid #d1d5db; background: #ffffff; cursor: pointer; transition: all 0.2s ease; }
         .subtabs button:hover { background: #e0e7ff; border-color: #6366f1; color: #1e1b4b; }
         .subtab { display: none; margin-top: 10px; }
 
         ul { padding-left: 20px; margin-top: 10px; }
         ul li { margin-bottom: 8px; font-size: 1rem; }
 
-        .city-images {
-            margin-top: 25px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-        .city-images img {
-            width: 100%;
-            border-radius: 14px;
-            object-fit: cover;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+        .city-images { margin-top: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .city-images img { width: 100%; border-radius: 14px; object-fit: cover; box-shadow: 0 6px 18px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s; }
         .city-images img:hover { transform: scale(1.06); box-shadow: 0 14px 30px rgba(0,0,0,0.25); }
 
         p { margin-bottom: 10px; font-size: 1.05rem; color: #334155; }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .tabs { flex-direction: column; }
-            .tabcontent { padding: 20px; }
-            .city-images { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 600px) { h1 { font-size: 2.2rem; } .tabs { flex-direction: column; } .tabcontent { padding: 20px; } .city-images { grid-template-columns: 1fr; } }
     </style>
 </head>
+<body>
+
+<h1>Metal Cities</h1>
+
+<!-- Tabs -->
+<div class="tabs">
+    <button onclick="openCity(event,'Oslo')" id="defaultOpen">Oslo</button>
+    <button onclick="openCity(event,'Stockholm')">Stockholm</button>
+</div>
+
+<!-- Oslo Tab -->
+<div id="Oslo" class="tabcontent">
+    <h2>Oslo</h2>
+    <p>Oslo, capital of Norway, birthplace of the Norwegian black metal scene.</p>
+
+    <div class="subtabs">
+        <button onclick="openSubTab(event,'oslo-bands')">Bands</button>
+        <button onclick="openSubTab(event,'oslo-places')">Places</button>
+    </div>
+
+    <div id="oslo-bands" class="subtab">
+        <ul>
+            <li>Ulver – Bergtatt to Nattens Madrigal</li>
+            <li>Satyricon – up to Nemesis Divina</li>
+            <li>Gorgoroth – pre-2004</li>
+        </ul>
+    </div>
+
+    <div id="oslo-places" class="subtab">
+        <ul>
+            <li>Akershus Fortress</li>
+            <li>Vigeland Park</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Stockholm Tab -->
+<div id="Stockholm" class="tabcontent">
+    <h2>Stockholm</h2>
+    <p>Stockholm, capital of Sweden, rich history and vibrant metal scene.</p>
+
+    <div class="subtabs">
+        <button onclick="openSubTab(event,'stockholm-bands')">Bands</button>
+        <button onclick="openSubTab(event,'stockholm-places')">Places</button>
+    </div>
+
+    <div id="stockholm-bands" class="subtab">
+        <ul>
+            <li>Morbid – early demos with Dead</li>
+            <li>God Macabre – The Winterlong (1993)</li>
+        </ul>
+    </div>
+
+    <div id="stockholm-places" class="subtab">
+        <ul>
+            <li>Gamla Stan</li>
+            <li>Vasa Museum</li>
+        </ul>
+    </div>
+</div>
+
+<!-- JS for Tabs -->
+<script>
+function openCity(evt, cityName){
+    var i, tabcontent = document.getElementsByClassName("tabcontent");
+    for(i=0;i<tabcontent.length;i++) tabcontent[i].style.display="none";
+    document.getElementById(cityName).style.display="block";
+}
+
+function openSubTab(evt, subTabId){
+    var i, subtabs = evt.currentTarget.parentNode.parentNode.getElementsByClassName("subtab");
+    for(i=0;i<subtabs.length;i++) subtabs[i].style.display="none";
+    document.getElementById(subTabId).style.display="block";
+}
+
+// Open default tab
+window.onload = function() {
+    document.getElementById("defaultOpen").click();
+}
+</script>
+
+</body>
+</html>
