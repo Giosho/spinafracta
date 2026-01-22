@@ -1,87 +1,81 @@
-<!-- Oslo -->
-<div id="Oslo" class="tabcontent">
-  <h2>Oslo</h2>
-  <p>Oslo, capital of Norway, is a city of culture, nature, and history. It is also the birthplace of the Norwegian black metal scene.</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metal Cities</title>
 
-  <div class="subtabs">
-    <button onclick="openSubTab(event,'oslo-bands')">Bands</button>
-    <button onclick="openSubTab(event,'oslo-places')">Places</button>
-    <button onclick="openSubTab(event,'oslo-facts')">Fun Facts</button>
-  </div>
+    <!-- Вграден CSS -->
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: #ffffff;
+            color: #222;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+        h1 { text-align: center; font-size: 3rem; margin-bottom: 40px; color: #1e293b; }
+        h2 { font-size: 2rem; margin-bottom: 10px; color: #0f172a; }
 
-  <div id="oslo-bands" class="subtab">
-    <ul>
-      <li>Ulver – Early trilogy: Bergtatt to Nattens Madrigal</li>
-      <li>Satyricon – up to Nemesis Divina</li>
-      <li>Gorgoroth – pre-2004</li>
-    </ul>
-  </div>
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
+        .tabs button {
+            padding: 12px 26px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 999px;
+            border: 2px solid #e5e7eb;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .tabs button:hover { background: #2563eb; color: #fff; border-color: #2563eb; transform: translateY(-2px); }
 
-  <div id="oslo-places" class="subtab">
-    <ul>
-      <li>Akershus Fortress – historic medieval fortress</li>
-      <li>Vigeland Park – sculpture park with 200+ sculptures</li>
-      <li>Metal Record Shops – small but legendary spots for collectors</li>
-      <li>Munch Museum – famous for Edvard Munch's "The Scream"</li>
-    </ul>
-  </div>
+        .tabcontent {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 16px;
+            background: #f9fafb;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
 
-  <div id="oslo-facts" class="subtab">
-    <ul>
-      <li>Population: ~700,000</li>
-      <li>Located at the end of the Oslofjord</li>
-      <li>Host of annual Øya Festival (music + culture)</li>
-      <li>Known for snowy winters and scenic fjords</li>
-    </ul>
-  </div>
+        .subtabs { margin: 20px 0; display: flex; gap: 10px; }
+        .subtabs button {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .subtabs button:hover { background: #e0e7ff; border-color: #6366f1; color: #1e1b4b; }
+        .subtab { display: none; margin-top: 10px; }
 
-  <div class="city-images">
-    <img src="images/oslo1.jpg" alt="Oslo">
-    <img src="images/oslo2.jpg" alt="Oslo">
-    <img src="images/oslo3.jpg" alt="Oslo">
-  </div>
-</div>
+        ul { padding-left: 20px; margin-top: 10px; }
+        ul li { margin-bottom: 8px; font-size: 1rem; }
 
-<!-- Stockholm -->
-<div id="Stockholm" class="tabcontent">
-  <h2>Stockholm</h2>
-  <p>Stockholm, capital of Sweden, is known for its rich history, architecture, and vibrant metal scene. Spread across 14 islands, it combines urban life with stunning natural beauty.</p>
+        .city-images {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .city-images img {
+            width: 100%;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .city-images img:hover { transform: scale(1.06); box-shadow: 0 14px 30px rgba(0,0,0,0.25); }
 
-  <div class="subtabs">
-    <button onclick="openSubTab(event,'stockholm-bands')">Bands</button>
-    <button onclick="openSubTab(event,'stockholm-places')">Places</button>
-    <button onclick="openSubTab(event,'stockholm-facts')">Fun Facts</button>
-  </div>
+        p { margin-bottom: 10px; font-size: 1.05rem; color: #334155; }
 
-  <div id="stockholm-bands" class="subtab">
-    <ul>
-      <li>Morbid – early demos with Dead</li>
-      <li>God Macabre – The Winterlong (1993)</li>
-      <li>Uncanny – Splinters from an Ever-Changing Face</li>
-    </ul>
-  </div>
-
-  <div id="stockholm-places" class="subtab">
-    <ul>
-      <li>Gamla Stan – historic old town with cobblestone streets</li>
-      <li>Vasa Museum – preserved 17th century ship</li>
-      <li>Death Metal Clubs – local venues for underground scene</li>
-      <li>Royal Palace – one of the largest palaces in Europe</li>
-    </ul>
-  </div>
-
-  <div id="stockholm-facts" class="subtab">
-    <ul>
-      <li>Population: ~975,000</li>
-      <li>Built across 14 islands connected by 57 bridges</li>
-      <li>Famous for Nobel Prize ceremonies</li>
-      <li>Strong connection to tech startups and design</li>
-    </ul>
-  </div>
-
-  <div class="city-images">
-    <img src="images/stockholm1.jpg" alt="Stockholm">
-    <img src="images/stockholm2.jpg" alt="Stockholm">
-    <img src="images/stockholm3.jpg" alt="Stockholm">
-  </div>
-</div>
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .tabs { flex-direction: column; }
+            .tabcontent { padding: 20px; }
+            .city-images { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
