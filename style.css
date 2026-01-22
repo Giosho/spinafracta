@@ -1,0 +1,66 @@
+/* Dark metal theme */
+body {
+    background-color: #0d0d0d;
+    color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    padding: 2rem;
+    background-color: #111;
+    border-bottom: 2px solid #e63946;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: #111;
+    padding: 1rem 0;
+    border-bottom: 1px solid #444;
+}
+
+nav a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #e63946;
+}
+
+section {
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+}
+
+h1, h2 {
+    font-family: 'Courier New', monospace;
+}
+
+button {
+    background-color: #e63946;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #b32a36;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #111;
+    border-top: 1px solid #444;
+}
