@@ -3,116 +3,1077 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metal Cities</title>
-
+    <title>Spinafracta</title>
     <style>
-        body { font-family: "Segoe UI", Roboto, Arial, sans-serif; background: #ffffff; color: #222; line-height: 1.6; padding: 40px 20px; }
-        h1 { text-align: center; font-size: 3rem; margin-bottom: 40px; color: #1e293b; }
-        h2 { font-size: 2rem; margin-bottom: 10px; color: #0f172a; }
+        * {
+            box-sizing: border-box;
+        }
 
-        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
-        .tabs button { padding: 12px 26px; font-size: 1rem; font-weight: 600; border-radius: 999px; border: 2px solid #e5e7eb; background: #f8fafc; cursor: pointer; transition: all 0.25s ease; }
-        .tabs button:hover { background: #2563eb; color: #fff; border-color: #2563eb; transform: translateY(-2px); }
+        body {
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            color: #222;
+            line-height: 1.6;
+            padding: 40px 20px;
+            transition: background 1s ease;
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            background-color: #f0f4f8;
+            margin: 0;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
 
-        .tabcontent { display: none; max-width: 900px; margin: 0 auto; padding: 30px; border-radius: 16px; background: #f9fafb; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        .subtabs { margin: 20px 0; display: flex; gap: 10px; }
-        .subtabs button { padding: 8px 16px; font-size: 0.9rem; border-radius: 8px; border: 1px solid #d1d5db; background: #ffffff; cursor: pointer; transition: all 0.2s ease; }
-        .subtabs button:hover { background: #e0e7ff; border-color: #6366f1; color: #1e1b4b; }
-        .subtab { display: none; margin-top: 10px; }
+        /* Header with Flags */
+        .header-container {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
 
-        ul { padding-left: 20px; margin-top: 10px; }
-        ul li { margin-bottom: 8px; font-size: 1rem; }
+        .flag-display {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
 
-        .city-images { margin-top: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-        .city-images img { width: 100%; border-radius: 14px; object-fit: cover; box-shadow: 0 6px 18px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s; }
-        .city-images img:hover { transform: scale(1.06); box-shadow: 0 14px 30px rgba(0,0,0,0.25); }
+        .flag-box {
+            width: 200px;
+            height: 120px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            position: relative;
+        }
 
-        p { margin-bottom: 10px; font-size: 1.05rem; color: #334155; }
+        .flag-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border-color: #3b82f6;
+        }
 
-        @media (max-width: 600px) { h1 { font-size: 2.2rem; } .tabs { flex-direction: column; } .tabcontent { padding: 20px; } .city-images { grid-template-columns: 1fr; } }
+        .flag-box::after {
+            content: attr(data-country);
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+
+        /* UPDATED: Using only image flags - NO CSS GRADIENTS */
+        .flag-norway, .flag-sweden {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .flag-norway {
+            background-image: url('norway_flag.png');
+        }
+
+        .flag-sweden {
+            background-image: url('sweden_flag.png');
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #1e293b;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #3b82f6, transparent);
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        /* Tab Buttons Container */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* Main Button Styles */
+        .flagBtn {
+            position: relative;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            border: 2px solid #e5e7eb;
+            background: #f8fafc;
+            cursor: pointer;
+            overflow: hidden;
+            color: #222;
+            transition: all 0.3s ease;
+            min-width: 160px;
+        }
+
+        /* Norway Flag Button */
+        #osloBtn {
+            position: relative;
+        }
+
+        #osloBtn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('norway_flag.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+            border-radius: 50px;
+        }
+
+        /* Sweden Flag Button */
+        #stockholmBtn {
+            position: relative;
+        }
+
+        #stockholmBtn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('sweden_flag.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+            border-radius: 50px;
+        }
+
+        /* Flag reveal on hover */
+        .flagBtn:hover::before {
+            opacity: 1;
+        }
+
+        /* Text styling */
+        .flagBtn span {
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .flagBtn:hover span {
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Button animation on hover */
+        .flagBtn:hover {
+            border-color: rgba(255,255,255,0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Active tab button style */
+        .flagBtn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        /* Tab Content */
+        .tabcontent {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .tabcontent.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #1e293b;
+            font-size: 2.2rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* Subtabs Navigation */
+        .subtabs {
+            margin: 25px 0;
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .subtabs button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            background: #f1f5f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .subtabs button:hover {
+            background: #e0e7ff;
+            color: #1e1b4b;
+            transform: translateY(-2px);
+        }
+
+        .subtabs button.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Subtabs Content */
+        .subtab {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .subtab.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* City Images Grid */
+        .city-images {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .city-images img {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            object-fit: cover;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .city-images img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        /* Information Paragraphs */
+        .info-section {
+            margin-bottom: 25px;
+        }
+
+        .info-section h3 {
+            color: #334155;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .info-section p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #e0f2fe 0%, #dbeafe 100%);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #3b82f6;
+        }
+
+        /* Combined Band Tabs Section */
+        .band-tab-section {
+            margin: 30px 0;
+        }
+
+        .band-tab-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Square Band Tab Buttons */
+        .band-tab-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .band-tab-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #2563eb;
+        }
+
+        .band-tab-btn.active {
+            border-color: #2563eb;
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+        }
+
+        .band-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .band-name-short {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Band Content */
+        .band-content {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            position: relative;
+            min-height: 400px;
+        }
+
+        .band-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Band layout with logo on left */
+        .band-layout {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        /* Left Logo Area */
+        .band-logo-area {
+            width: 200px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: transparent;
+        }
+
+        .band-logo {
+            max-width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(0.3);
+        }
+
+        /* Band info on right */
+        .band-info {
+            flex: 1;
+        }
+
+        .band-header {
+            margin-bottom: 20px;
+        }
+
+        .band-title {
+            color: #1e293b;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 5px 0;
+        }
+
+        .band-period {
+            color: #64748b;
+            font-size: 1rem;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .genre-tag {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .band-description {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+
+        .album-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .album-list li {
+            color: #475569;
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 1rem;
+        }
+
+        .album-list li:last-child {
+            border-bottom: none;
+        }
+
+        .album-list li::before {
+            content: '💿';
+            position: absolute;
+            left: 0;
+            font-size: 1.3rem;
+            top: 12px;
+        }
+
+        .album-year {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            font-weight: 500;
+        }
+
+        /* Metal-specific styles */
+        .metal-type {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .metal-type::before {
+            content: '🎸';
+            margin-right: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .flag-display {
+                gap: 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .flag-box {
+                width: 250px;
+                height: 150px;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .flagBtn {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .tabcontent {
+                padding: 25px;
+                margin: 0 15px;
+            }
+            
+            .city-images {
+                grid-template-columns: 1fr;
+            }
+            
+            .subtabs {
+                flex-wrap: wrap;
+            }
+            
+            .band-tab-btn {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .band-layout {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .band-logo-area {
+                width: 100%;
+                height: 150px;
+            }
+            
+            .band-logo {
+                max-height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .flag-box {
+                width: 200px;
+                height: 120px;
+            }
+            
+            .flagBtn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .band-tab-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .band-icon {
+                font-size: 20px;
+            }
+            
+            .band-name-short {
+                font-size: 0.6rem;
+            }
+            
+            .band-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Header with Flags -->
+        <div class="header-container">
+            <div class="flag-display">
+                <div class="flag-box" data-country="Norway">
+                    <div class="flag-norway"></div>
+                </div>
+                <div class="flag-box" data-country="Sweden">
+                    <div class="flag-sweden"></div>
+                </div>
+            </div>
+            
+            <h1>Spinafracta</h1>
+            <div class="subtitle">Discover the capitals of Norway and Sweden</div>
+        </div>
+        
+        <!-- Main Navigation Tabs -->
+        <div class="tabs">
+            <button id="osloBtn" class="flagBtn active" onclick="openCity(event, 'Oslo')">
+                <span>Oslo, Norway</span>
+            </button>
+            <button id="stockholmBtn" class="flagBtn" onclick="openCity(event, 'Stockholm')">
+                <span>Stockholm, Sweden</span>
+            </button>
+        </div>
 
-<h1>Metal Cities</h1>
+        <!-- Oslo Tab Content -->
+        <div id="Oslo" class="tabcontent active">
+            <h2>🇳🇴 Oslo - The Viking Capital</h2>
+            
+            <div class="info-section">
+                <p>Oslo is the capital and most populous city of Norway. It constitutes both a county and a municipality. Founded in 1040, the city was established as a "kaupstad" or trading place in 1048 by Harald Hardrada.</p>
+                
+                <div class="highlight">
+                    <p><strong>Fun Fact:</strong> Oslo is one of the fastest-growing major cities in Europe, and its metropolitan area is projected to grow by nearly 30% by 2040.</p>
+                </div>
+            </div>
 
-<!-- Tabs -->
-<div class="tabs">
-    <button onclick="openCity(event,'Oslo')" id="defaultOpen">Oslo</button>
-    <button onclick="openCity(event,'Stockholm')">Stockholm</button>
-</div>
+            <!-- Subtabs for Oslo -->
+            <div class="subtabs">
+                <button class="active" onclick="openSubTab(event, 'oslo-attractions')">Attractions</button>
+                <button onclick="openSubTab(event, 'oslo-culture')">Culture</button>
+                <button onclick="openSubTab(event, 'oslo-food')">Food</button>
+                <button onclick="openSubTab(event, 'oslo-bands')">Black Metal Bands</button>
+            </div>
 
-<!-- Oslo Tab -->
-<div id="Oslo" class="tabcontent">
-    <h2>Oslo</h2>
-    <p>Oslo, capital of Norway, birthplace of the Norwegian black metal scene.</p>
+            <!-- Attractions Subtab -->
+            <div id="oslo-attractions" class="subtab active">
+                <h3>Must-See Attractions</h3>
+                <p>• Viking Ship Museum - See original Viking ships from the 9th century</p>
+                <p>• Oslo Opera House - Walk on the roof of this architectural marvel</p>
+                <p>• Vigeland Sculpture Park - World's largest sculpture park by a single artist</p>
+                <p>• Holmenkollen Ski Museum - Historic ski jump with panoramic views</p>
+            </div>
 
-    <div class="subtabs">
-        <button onclick="openSubTab(event,'oslo-bands')">Bands</button>
-        <button onclick="openSubTab(event,'oslo-places')">Places</button>
+            <!-- Culture Subtab -->
+            <div id="oslo-culture" class="subtab">
+                <h3>Cultural Highlights</h3>
+                <p>• Nobel Peace Prize awarded annually at Oslo City Hall</p>
+                <p>• Munch Museum - Home of "The Scream" by Edvard Munch</p>
+                <p>• Norwegian National Opera & Ballet</p>
+                <p>• Traditional Norwegian folk music and dance festivals</p>
+            </div>
+
+            <!-- Food Subtab -->
+            <div id="oslo-food" class="subtab">
+                <h3>Norwegian Cuisine</h3>
+                <p>• Smoked salmon and other fresh seafood</p>
+                <p>• Traditional "kjøttkaker" (meatballs)</p>
+                <p>• Brunost (brown cheese) - unique caramelized whey cheese</p>
+                <p>• "Vaffel" (waffles) with sour cream and jam</p>
+            </div>
+
+            <!-- Black Metal Bands Subtab -->
+            <div id="oslo-bands" class="subtab">
+                <h3>Norwegian Black Metal Bands</h3>
+                <p class="highlight">Focusing only on bands during their true creative periods before commercialization.</p>
+                
+                <div class="band-tab-section">
+                    <!-- Square Band Tab Buttons -->
+                    <div class="band-tab-header">
+                        <button class="band-tab-btn active" onclick="openBandTab(event, 'oslo-ulver')">
+                            <div class="band-icon">⚔️</div>
+                            <div class="band-name-short">Ulver</div>
+                        </button>
+                        <button class="band-tab-btn" onclick="openBandTab(event, 'oslo-satyricon')">
+                            <div class="band-icon">👑</div>
+                            <div class="band-name-short">Satyricon</div>
+                        </button>
+                        <button class="band-tab-btn" onclick="openBandTab(event, 'oslo-gorgoroth')">
+                            <div class="band-icon">🔥</div>
+                            <div class="band-name-short">Gorgoroth</div>
+                        </button>
+                    </div>
+
+                    <!-- Band Content Sections -->
+                    <div id="oslo-ulver" class="band-content active">
+                        <div class="band-layout">
+                            <div class="band-logo-area">
+                                <img src="ulver_logo.png" alt="Ulver Logo" class="band-logo">
+                            </div>
+                            
+                            <div class="band-info">
+                                <div class="band-header">
+                                    <h3 class="band-title">Ulver <span class="metal-type">Black Metal</span></h3>
+                                    <div class="band-period">Early trilogy only (1994-1997)</div>
+                                    <span class="genre-tag">Black/Folk Metal</span>
+                                </div>
+                                <div class="band-description">
+                                    The definitive Norwegian black metal trilogy that defined atmospheric black metal. Everything after Nattens Madrigal is irrelevant to this list.
+                                </div>
+                                <ul class="album-list">
+                                    <li><strong>Bergtatt</strong> <span class="album-year">(1995)</span> - Ethereal folk-black masterpiece</li>
+                                    <li><strong>Kveldssanger</strong> <span class="album-year">(1996)</span> - Acoustic atmospheric journey</li>
+                                    <li><strong>Nattens Madrigal</strong> <span class="album-year">(1997)</span> - Raw, unproduced black metal perfection</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="oslo-satyricon" class="band-content">
+                        <div class="band-layout">
+                            <div class="band-logo-area">
+                                <img src="satyricon_logo.png" alt="Satyricon Logo" class="band-logo">
+                            </div>
+                            
+                            <div class="band-info">
+                                <div class="band-header">
+                                    <h3 class="band-title">Satyricon <span class="metal-type">Black Metal</span></h3>
+                                    <div class="band-period">Up to Nemesis Divina (1993-1996)</div>
+                                    <span class="genre-tag">Black Metal</span>
+                                </div>
+                                <div class="band-description">
+                                    The true Satyricon that actually mattered. Post-1996 they became radio metal for goths with predictable riffs and mainstream aspirations.
+                                </div>
+                                <ul class="album-list">
+                                    <li><strong>Dark Medieval Times</strong> <span class="album-year">(1994)</span> - Medieval atmosphere meets raw aggression</li>
+                                    <li><strong>The Shadowthrone</strong> <span class="album-year">(1994)</span> - Epic pagan black metal</li>
+                                    <li><strong>Nemesis Divina</strong> <span class="album-year">(1996)</span> - Their peak before the decline</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="oslo-gorgoroth" class="band-content">
+                        <div class="band-layout">
+                            <div class="band-logo-area">
+                                <img src="gorgoroth_logo.png" alt="Gorgoroth Logo" class="band-logo">
+                            </div>
+                            
+                            <div class="band-info">
+                                <div class="band-header">
+                                    <h3 class="band-title">Gorgoroth <span class="metal-type">Black Metal</span></h3>
+                                    <div class="band-period">Pre-2004 (Before Gaahl's circus)</div>
+                                    <span class="genre-tag">Black Metal</span>
+                                </div>
+                                <div class="band-description">
+                                    When they were actually a serious black metal band, not Gaahl's personal theater project for attention-seeking antics.
+                                </div>
+                                <ul class="album-list">
+                                    <li><strong>Pentagram</strong> <span class="album-year">(1994)</span> - Raw Satanic black metal</li>
+                                    <li><strong>Antichrist</strong> <span class="album-year">(1996)</span> - Blasphemous perfection</li>
+                                    <li><strong>Under the Sign of Hell</strong> <span class="album-year">(1997)</span> - Their creative peak</li>
+                                    <li><strong>Destroyer</strong> <span class="album-year">(1998)</span> - Still respectable</li>
+                                    <li><strong>Incipit Satan</strong> <span class="album-year">(2000)</span> - Last good album</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oslo Images -->
+            <div class="city-images">
+                <img src="opera.png" alt="Oslo Opera House">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Viking Ship Museum">
+                <img src="Park.png" alt="Vigeland Sculpture Park">
+            </div>
+        </div>
+
+        <!-- Stockholm Tab Content -->
+        <div id="Stockholm" class="tabcontent">
+            <h2>🇸🇪 Stockholm - The Venice of the North</h2>
+            
+            <div class="info-section">
+                <p>Stockholm is the capital and largest city of Sweden, and the most populous urban area in Scandinavia. The city is built on 14 islands connected by 57 bridges, earning it the nickname "Venice of the North."</p>
+                
+                <div class="highlight">
+                    <p><strong>Fun Fact:</strong> Stockholm's metro system is often called "the world's longest art gallery" with over 90 of its 100 stations decorated with artworks.</p>
+                </div>
+            </div>
+
+            <!-- Subtabs for Stockholm -->
+            <div class="subtabs">
+                <button class="active" onclick="openSubTab(event, 'stockholm-attractions')">Attractions</button>
+                <button onclick="openSubTab(event, 'stockholm-culture')">Culture</button>
+                <button onclick="openSubTab(event, 'stockholm-food')">Food</button>
+                <button onclick="openSubTab(event, 'stockholm-bands')">Death Metal Bands</button>
+            </div>
+
+            <!-- Attractions Subtab -->
+            <div id="stockholm-attractions" class="subtab active">
+                <h3>Must-See Attractions</h3>
+                <p>• Gamla Stan - Medieval old town with cobblestone streets</p>
+                <p>• Vasa Museum - Home to a 17th-century warship that sank on its maiden voyage</p>
+                <p>• Skansen - World's oldest open-air museum</p>
+                <p>• Royal Palace - Official residence of the Swedish monarch</p>
+            </div>
+
+            <!-- Culture Subtab -->
+            <div id="stockholm-culture" class="subtab">
+                <h3>Cultural Highlights</h3>
+                <p>• ABBA Museum - Interactive museum dedicated to the pop group</p>
+                <p>• Nobel Prize Museum - Learn about Nobel Prize laureates</p>
+                <p>• Moderna Museet - Museum of modern and contemporary art</p>
+                <p>• Royal Swedish Opera - Founded in 1773</p>
+            </div>
+
+            <!-- Food Subtab -->
+            <div id="stockholm-food" class="subtab">
+                <h3>Swedish Cuisine</h3>
+                <p>• Swedish meatballs with lingonberry sauce</p>
+                <p>• Gravlax - Dill-cured salmon</p>
+                <p>• Kanelbullar (cinnamon buns) - Swedish fika tradition</p>
+                <p>• Pickled herring in various flavors</p>
+            </div>
+
+            <!-- Death Metal Bands Subtab -->
+            <div id="stockholm-bands" class="subtab">
+                <h3>Swedish Death Metal Bands</h3>
+                <p class="highlight">Focusing on the early, brutal era of Swedish death metal before melodeath took over.</p>
+                
+                <div class="band-tab-section">
+                    <!-- Square Band Tab Buttons -->
+                    <div class="band-tab-header">
+                        <button class="band-tab-btn active" onclick="openBandTab(event, 'stockholm-morbid')">
+                            <div class="band-icon">💀</div>
+                            <div class="band-name-short">Morbid</div>
+                        </button>
+                        <button class="band-tab-btn" onclick="openBandTab(event, 'stockholm-godmacabre')">
+                            <div class="band-icon">🪦</div>
+                            <div class="band-name-short">God Macabre</div>
+                        </button>
+                        <button class="band-tab-btn" onclick="openBandTab(event, 'stockholm-bloodbath')">
+                            <div class="band-icon">🩸</div>
+                            <div class="band-name-short">Bloodbath</div>
+                        </button>
+                    </div>
+
+                    <!-- Band Content Sections -->
+                    <div id="stockholm-morbid" class="band-content active">
+                        <div class="band-layout">
+                            <div class="band-logo-area">
+                                <img src="morbid_logo.png" alt="Morbid Logo" class="band-logo">
+                            </div>
+                            
+                            <div class="band-info">
+                                <div class="band-header">
+                                    <h3 class="band-title">Morbid <span class="metal-type">Death Metal</span></h3>
+                                    <div class="band-period">Early demos with Dead (pre-Mayhem)</div>
+                                    <span class="genre-tag">Death metal thrash metal black metal</span>
+                                </div>
+                                <div class="band-description">
+                                    The raw death metal roots featuring Dead (later of Mayhem). Brutal, unpolished death metal that influenced the early Stockholm sound.
+                                </div>
+                                <ul class="album-list">
+                                    <li><strong>December Moon</strong> <span class="album-year">(1987)</span> - Demo with Dead on vocals</li>
+                                    <li><strong>Last Supper</strong> <span class="album-year">(1988)</span> - Demo, raw death metal</li>
+                                    <li><strong>Morbid Rehearsals</strong> <span class="album-year">(1988-89)</span> - Early recordings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="stockholm-godmacabre" class="band-content">
+                        <div class="band-layout">
+                            <div class="band-logo-area">
+                                <img src="god_macabre_logo.png" alt="God Macabre Logo" class="band-logo">
+                            </div>
+                            
+                            <div class="band-info">
+                                <div class="band-header">
+                                    <h3 class="band-title">God Macabre <span class="metal-type">Death Metal</span></h3>
+                                    <div class="band-period">The Winterlong (1993)</div>
+                                    <span class="genre-tag">Thrash metal first-wave black metal hardcore punk</span>
+                                </div>
+                                <div class="band-description">
+                                    Brief but absolutely killer. One album that perfectly captures the melancholic yet brutal Swedish death metal sound.
+                                </div>
+                                <ul class="album-list">
+                                    <li><strong>The Winterlong</strong> <span class="album-year">(1993)</span> - Their only album, a masterpiece</li>
+                                    <li>Recorded in 1991, released in 1993</li>
+                                    <li>Melodic yet brutal death metal</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="stockholm-bloodbath" class="band-content">
+                        <div class="band-layout">
+                            <div class="band-logo-area">
+                                <img src="bloodbath_logo.png" alt="Bloodbath Logo" class="band-logo">
+                            </div>
+                            
+                            <div class="band-info">
+                                <div class="band-header">
+                                    <h3 class="band-title">Bloodbath <span class="metal-type">Death Metal</span></h3>
+                                    <div class="band-period">Supergroup (1998-Present)</div>
+                                    <span class="genre-tag">Brutal Death Metal</span>
+                                </div>
+                                <div class="band-description">
+                                    Swedish death metal supergroup featuring members of Opeth, Katatonia, and Edge of Sanity. Pure old-school Stockholm death metal worship.
+                                </div>
+                                <ul class="album-list">
+                                    <li><strong>Breeding Death</strong> <span class="album-year">(2000)</span> - EP that started it all</li>
+                                    <li><strong>Resurrection Through Carnage</strong> <span class="album-year">(2002)</span> - Classic Swedish death metal</li>
+                                    <li><strong>Nightmares Made Flesh</strong> <span class="album-year">(2004)</span> - With Peter Tägtgren on vocals</li>
+                                    <li><strong>The Fathomless Mastery</strong> <span class="album-year">(2008)</span> - Technical brutality</li>
+                                    <li><strong>Grand Morbid Funeral</strong> <span class="album-year">(2014)</span> - Return to roots</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stockholm Images -->
+            <div class="city-images">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Stockholm Old Town">
+                <img src="ship.png" alt="Vasa Museum">
+                <img src="Stock.png" alt="Stockholm Archipelago">
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Nordic Cities Explorer • Learn about the capitals of Norway and Sweden</p>
+            <p>Flag images: norway_flag.png, sweden_flag.png • City images from Unsplash</p>
+        </div>
     </div>
 
-    <div id="oslo-bands" class="subtab">
-        <ul>
-            <li>Ulver – Bergtatt to Nattens Madrigal</li>
-            <li>Satyricon – up to Nemesis Divina</li>
-            <li>Gorgoroth – pre-2004</li>
-        </ul>
-    </div>
+    <script>
+        // Open main city tab
+        function openCity(event, cityName) {
+            // Hide all tab content
+            var tabcontents = document.getElementsByClassName("tabcontent");
+            for (var i = 0; i < tabcontents.length; i++) {
+                tabcontents[i].classList.remove("active");
+            }
+            
+            // Remove active class from all buttons
+            var tablinks = document.getElementsByClassName("flagBtn");
+            for (var i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Show current tab and add active class to button
+            document.getElementById(cityName).classList.add("active");
+            event.currentTarget.classList.add("active");
+            
+            // Change background image with transition
+            if (cityName === "Oslo") {
+                document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1579559107193-8377690d5d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')";
+            } else if (cityName === "Stockholm") {
+                document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1590233331095-93e783f8f217?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')";
+            }
+            
+            // Reset subtabs to show first subtab
+            var firstSubtabs = document.querySelectorAll(".subtabs button");
+            if (firstSubtabs.length > 0) {
+                firstSubtabs[0].classList.add("active");
+                var firstSubtabId = firstSubtabs[0].getAttribute("onclick").match(/'([^']+)'/)[1];
+                openSubTab({currentTarget: firstSubtabs[0]}, firstSubtabId);
+            }
+            
+            // Reset band tabs to show first band
+            var firstBandTabs = document.querySelectorAll(".band-tab-btn");
+            if (firstBandTabs.length > 0) {
+                firstBandTabs[0].classList.add("active");
+                var firstBandTabId = firstBandTabs[0].getAttribute("onclick").match(/'([^']+)'/)[1];
+                openBandTab({currentTarget: firstBandTabs[0]}, firstBandTabId);
+            }
+        }
 
-    <div id="oslo-places" class="subtab">
-        <ul>
-            <li>Akershus Fortress</li>
-            <li>Vigeland Park</li>
-        </ul>
-    </div>
-</div>
+        // Open subtab
+        function openSubTab(event, subTabId) {
+            // Get all subtabs in the current tab
+            var currentTab = event.currentTarget.closest(".tabcontent");
+            var subtabs = currentTab.querySelectorAll(".subtab");
+            var subtabButtons = currentTab.querySelectorAll(".subtabs button");
+            
+            // Hide all subtabs in current tab
+            for (var i = 0; i < subtabs.length; i++) {
+                subtabs[i].classList.remove("active");
+            }
+            
+            // Remove active class from all subtab buttons in current tab
+            for (var i = 0; i < subtabButtons.length; i++) {
+                subtabButtons[i].classList.remove("active");
+            }
+            
+            // Show current subtab and add active class to button
+            document.getElementById(subTabId).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
 
-<!-- Stockholm Tab -->
-<div id="Stockholm" class="tabcontent">
-    <h2>Stockholm</h2>
-    <p>Stockholm, capital of Sweden, rich history and vibrant metal scene.</p>
+        // Open band tab
+        function openBandTab(event, bandTabId) {
+            // Get all band content in the current subtab
+            var currentSubtab = event.currentTarget.closest(".subtab");
+            var bandContents = currentSubtab.querySelectorAll(".band-content");
+            var bandTabButtons = currentSubtab.querySelectorAll(".band-tab-btn");
+            
+            // Hide all band content
+            for (var i = 0; i < bandContents.length; i++) {
+                bandContents[i].classList.remove("active");
+            }
+            
+            // Remove active class from all band tab buttons
+            for (var i = 0; i < bandTabButtons.length; i++) {
+                bandTabButtons[i].classList.remove("active");
+            }
+            
+            // Show current band content and add active class to button
+            document.getElementById(bandTabId).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
 
-    <div class="subtabs">
-        <button onclick="openSubTab(event,'stockholm-bands')">Bands</button>
-        <button onclick="openSubTab(event,'stockholm-places')">Places</button>
-    </div>
-
-    <div id="stockholm-bands" class="subtab">
-        <ul>
-            <li>Morbid – early demos with Dead</li>
-            <li>God Macabre – The Winterlong (1993)</li>
-        </ul>
-    </div>
-
-    <div id="stockholm-places" class="subtab">
-        <ul>
-            <li>Gamla Stan</li>
-            <li>Vasa Museum</li>
-        </ul>
-    </div>
-</div>
-
-<!-- JS for Tabs -->
-<script>
-function openCity(evt, cityName){
-    var i, tabcontent = document.getElementsByClassName("tabcontent");
-    for(i=0;i<tabcontent.length;i++) tabcontent[i].style.display="none";
-    document.getElementById(cityName).style.display="block";
-}
-
-function openSubTab(evt, subTabId){
-    var i, subtabs = evt.currentTarget.parentNode.parentNode.getElementsByClassName("subtab");
-    for(i=0;i<subtabs.length;i++) subtabs[i].style.display="none";
-    document.getElementById(subTabId).style.display="block";
-}
-
-// Open default tab
-window.onload = function() {
-    document.getElementById("defaultOpen").click();
-}
-</script>
-
+        // Initialize page with Oslo tab open
+        window.onload = function() {
+            // Trigger Oslo tab by default
+            document.getElementById("osloBtn").click();
+            
+            // Set default background
+            document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1579559107193-8377690d5d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')";
+        }
+    </script>
 </body>
 </html>

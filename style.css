@@ -21,6 +21,58 @@ body {
 .subtabs button:hover { background: #e0e7ff; border-color: #6366f1; color: #1e1b4b; }
 .subtab { display: none; margin-top: 10px; }
 
+.flagBtn {
+    position: relative;
+    padding: 12px 26px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 999px;
+    border: 2px solid #e5e7eb;
+    background: #f8fafc;
+    cursor: pointer;
+    overflow: hidden;
+    color: #222;
+    transition: all 0.3s ease;
+}
+
+/* Флаг като фон при hover */
+#osloBtn:hover {
+    background-image: url('norway_flag.png'); /* цял флаг */
+    background-size: contain; /* побира се цялото знаме */
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white; /* текстът да се вижда */
+}
+
+#stockholmBtn:hover {
+    background-image: url('sweden_flag.png'); /* цял флаг */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+}
+
+
+/* Flag inside button as blue rectangle */
+.tabs button::before {
+    content: "";
+    position: absolute;
+    left: -50px; /* start off the button */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 25px;
+    background-color: #2563eb; /* синият цвят */
+    border-radius: 4px;
+    transition: all 0.4s ease;
+}
+
+/* Hover: slide flag inside button */
+.tabs button:hover::before {
+    left: 10px;
+}
+
+
 .city-images { margin-top: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
 .city-images img { width: 100%; border-radius: 14px; object-fit: cover; box-shadow: 0 6px 18px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s; }
 .city-images img:hover { transform: scale(1.06); box-shadow: 0 14px 30px rgba(0,0,0,0.25); }
